@@ -18,6 +18,8 @@ plugins {
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.google.devtools.ksp") version ("2.2.0-2.0.2")
   id("org.jetbrains.kotlin.jvm") version "2.2.0"
+  id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0"
+  application
 }
 
 repositories { mavenCentral() }
@@ -29,6 +31,13 @@ dependencies {
   implementation("com.google.protobuf:protobuf-javalite:4.28.3")
   implementation("org.bouncycastle:bcpkix-jdk18on:1.78.1")
   implementation("org.jetbrains.kotlin:kotlin-stdlib:2.2.0")
+
+  // Ktor dependencies for API wrapper
+  implementation("io.ktor:ktor-server-core-jvm:3.0.0")
+  implementation("io.ktor:ktor-server-netty-jvm:3.0.0")
+  implementation("io.ktor:ktor-server-content-negotiation-jvm:3.0.0")
+  implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:3.0.0")
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
   testImplementation(kotlin("test"))
   testImplementation("com.google.testparameterinjector:test-parameter-injector:1.18")
@@ -98,5 +107,9 @@ sourceSets {
 
 tasks.named("compileKotlin").configure {
     dependsOn("generateSources")
+}
+
+application {
+    mainClass.set("com.android.keyattestation.api.MainKt")
 }
 
